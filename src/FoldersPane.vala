@@ -66,14 +66,12 @@ public class Notes.FoldersPane : Granite.Bin {
 
     private void setup_func (Object object) {
         var list_item = (Gtk.ListItem) object;
-        list_item.child = new Gtk.Label ("") {
-            xalign = 0
-        };
+        list_item.child = new FolderItemChild ();
     }
 
     private void bind_func (Object object) {
         var list_item = (Gtk.ListItem) object;
-        ((Gtk.Label) list_item.child).label = ((Notes.FoldersPane.FolderInfo) list_item.item).folder_info.display_name;
+        ((FolderItemChild) list_item.child).folder_info = (Notes.FoldersPane.FolderInfo) list_item.item;
     }
 
     private void header_setup_func (Object object) {
@@ -95,6 +93,26 @@ public class Notes.FoldersPane : Granite.Bin {
                 store: store,
                 folder_info: folder_info
             );
+        }
+    }
+
+    private class FolderItemChild : Gtk.Box {
+        public Notes.FoldersPane.FolderInfo folder_info {
+            set {
+                label.label = value.folder_info.display_name;
+            }
+        }
+
+        private Gtk.Label label;
+
+        construct {
+            var folder_image = new Gtk.Image.from_icon_name ("folder");
+
+            label = new Gtk.Label (null);
+
+            spacing = 6;
+            append (folder_image);
+            append (label);
         }
     }
 }
