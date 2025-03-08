@@ -5,6 +5,7 @@ project(
     meson_version: '>=0.58.0'
 )
 
+gnome = import('gnome')
 i18n = import('i18n')
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
@@ -16,6 +17,10 @@ dependencies = [
     granite_dep,
     gtk_dep
 ]
+
+gnome.post_install(
+    gtk_update_icon_cache: true
+)
 
 subdir('data')
 subdir('po')
