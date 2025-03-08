@@ -49,6 +49,21 @@ public class Notes.Application : Gtk.Application {
         main_window.present ();
 
         add_window (main_window);
+
+        /*
+        * This is very finicky. Bind size after present else set_titlebar gives us bad sizes
+        * Set maximize after height/width else window is min size on unmaximize
+        * Bind maximize as SET else get get bad sizes
+        */
+        var settings = new Settings (application_id);
+        settings.bind ("window-height", main_window, "default-height", DEFAULT);
+        settings.bind ("window-width", main_window, "default-width", DEFAULT);
+
+        if (settings.get_boolean ("window-maximized")) {
+            main_window.maximize ();
+        }
+
+        settings.bind ("window-maximized", main_window, "maximized", SET);
     }
 
     public static int main (string[] args) {
