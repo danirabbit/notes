@@ -1,3 +1,9 @@
+install_data(
+    'notes.gschema.xml',
+    install_dir: get_option('datadir') / 'glib-2.0' / 'schemas',
+    rename: meson.project_name() + '.gschema.xml'
+)
+
 i18n.merge_file(
     input: 'notes.desktop.in',
     output: meson.project_name() + '.desktop',
