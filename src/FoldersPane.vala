@@ -32,6 +32,7 @@ public class Notes.FoldersPane : Granite.Bin {
         toolbarview.add_top_bar (headerbar);
 
         child = toolbarview;
+        add_css_class (Granite.STYLE_CLASS_SIDEBAR);
 
         var session = Notes.Session.get_default ();
         session.service_added.connect ((service) => {
