@@ -43,7 +43,7 @@ public class Notes.Application : Gtk.Application {
             return;
         }
 
-        var main_window = new Gtk.ApplicationWindow (this) {
+        var main_window = new MainWindow () {
             title = _("Notes")
         };
         main_window.present ();
