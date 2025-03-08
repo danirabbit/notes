@@ -5,6 +5,8 @@ project(
   meson_version: '>=0.58.0'
 )
 
+i18n = import('i18n')
+
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
 
 gtk_dep = dependency('gtk4')
@@ -13,4 +15,6 @@ dependencies = [
     gtk_dep
 ]
 
+subdir('data')
+subdir('po')
 subdir('src')

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.5
+Type=Application
+
+Name=Notes
+Comment=Take notes
+Categories=Office;Utility;TextEditor;
+
+Icon=io.elementary.notes
+Exec=io.elementary.notes
+SingleMainWindow=true
+StartupNotify=true
+Terminal=false
