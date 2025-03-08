@@ -1,5 +1,6 @@
 sources = [
-    'Application.vala'
+    'Application.vala',
+    'MainWindow.vala'
 ]
 
 config_data = configuration_data()
