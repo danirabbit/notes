@@ -4,6 +4,20 @@
  */
 
 public class Notes.Application : Gtk.Application {
+    public Application () {
+        Object (
+            application_id: "io.elementary.notes",
+            flags: ApplicationFlags.DEFAULT_FLAGS
+        );
+    }
+
+    construct {
+        GLib.Intl.setlocale (LocaleCategory.ALL, "");
+        GLib.Intl.bindtextdomain (application_id, Constants.LOCALEDIR);
+        GLib.Intl.bind_textdomain_codeset (application_id, "UTF-8");
+        GLib.Intl.textdomain (application_id);
+    }
+
     protected override void activate () {
         if (active_window != null) {
             active_window.present ();
