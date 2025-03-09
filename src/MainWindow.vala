@@ -4,13 +4,9 @@
  */
 
 public class Notes.MainWindow : Adw.ApplicationWindow {
-    private Adw.NavigationSplitView content_split_view;
-    private EditorPage editor_page;
-    private NotesPage notes_page;
-
     construct {
         var folders_page = new FoldersPage ();
-        notes_page = new NotesPage ();
+        var notes_page = new NotesPage ();
 
         var nav_split_view = new Adw.NavigationSplitView () {
             content = notes_page,
@@ -20,9 +16,9 @@ public class Notes.MainWindow : Adw.ApplicationWindow {
 
         var nav_page = new Adw.NavigationPage (nav_split_view, "navigation");
 
-        editor_page = new EditorPage ();
+        var editor_page = new EditorPage ();
 
-        content_split_view = new Adw.NavigationSplitView () {
+        var content_split_view = new Adw.NavigationSplitView () {
             content = editor_page,
             sidebar = nav_page,
             show_content = true,
