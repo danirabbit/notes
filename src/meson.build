@@ -2,6 +2,7 @@ sources = [
     'Application.vala',
     'FoldersPane.vala',
     'MainWindow.vala',
+    'Backend' / 'FolderItem.vala',
     'Backend' / 'Session.vala'
 ]
 
@@ -17,6 +18,7 @@ executable(
     meson.project_name(),
     sources,
     config_file,
+    gresource,
     dependencies: dependencies,
     install: true
 )
