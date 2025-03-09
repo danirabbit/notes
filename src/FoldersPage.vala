@@ -73,10 +73,6 @@ public class Notes.FoldersPage : Adw.NavigationPage {
 
         private Gtk.Label label;
 
-        class construct {
-            set_css_name ("folder-item-child");
-        }
-
         construct {
             var folder_image = new Gtk.Image.from_icon_name ("folder");
 

@@ -3,6 +3,10 @@
     margin-bottom: 0.25em;
 }
 
-folder-item-child {
+.sidebar-pane row > box {
     border-spacing: 0.5em;
+}
+
+.content-pane row {
+    padding: 0.5em;
 }
