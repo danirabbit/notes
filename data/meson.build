@@ -13,4 +13,10 @@ i18n.merge_file(
     install_dir: get_option('datadir') / 'applications'
 )
 
+gresource = gnome.compile_resources(
+    'notes-resources',
+    'notes.gresource.xml',
+    source_dir: 'styles'
+)
+
 subdir('icons')

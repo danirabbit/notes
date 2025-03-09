@@ -6,6 +6,8 @@
 public class Notes.Session : Camel.Session {
     public signal void service_added (Camel.Service service);
 
+    public GLib.ListStore folder_items { get; private set; }
+
     private static GLib.Once<Notes.Session> instance;
     public static unowned Notes.Session get_default () {
         return instance.once (() => { return new Notes.Session (); });
@@ -28,6 +30,8 @@ public class Notes.Session : Camel.Session {
 
         network_monitor.network_changed.connect (set_online);
         set_online (true);
+
+        folder_items = new GLib.ListStore (typeof (Notes.FolderItem));
 
         init.begin ();
     }
@@ -218,10 +222,33 @@ public class Notes.Session : Camel.Session {
             source.camel_configure_service (service);
             source.bind_property ("display-name", service, "display-name", SYNC_CREATE);
             if (service is Camel.OfflineStore) {
-                service_added (service);
+                add_store ((Camel.OfflineStore) service);
             }
         }
 
         return service;
+    }
+
+    private void add_store (Camel.Store store) {
+        store.get_folder_info.begin ("Notes", RECURSIVE, GLib.Priority.DEFAULT, null, (obj,res) => {
+            try {
+                var folder_info = store.get_folder_info.end (res);
+                if (folder_info != null) {
+                    folder_items.append (new Notes.FolderItem (store, folder_info));
+
+                    var child = folder_info.child;
+                    while (child != null) {
+                        folder_items.append (new Notes.FolderItem (store, child));
+                        child = child.next;
+                    }
+                }
+            } catch (Error e) {
+                critical (e.message);
+            }
+        });
+
+        store.folder_created.connect ((folder_info) => {
+            folder_items.append (new Notes.FolderItem (store, folder_info));
+        });
     }
 }

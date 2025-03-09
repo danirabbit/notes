@@ -5,8 +5,7 @@
 
 public class Notes.FoldersPane : Granite.Bin {
     construct {
-        var list_store = new GLib.ListStore (typeof (Notes.FoldersPane.FolderInfo));
-        var selection_model = new Gtk.NoSelection (list_store);
+        var selection_model = new Gtk.NoSelection (Notes.Session.get_default ().folder_items);
 
         var factory = new Gtk.SignalListItemFactory ();
         factory.setup.connect (setup_func);
@@ -33,35 +32,6 @@ public class Notes.FoldersPane : Granite.Bin {
 
         child = toolbarview;
         add_css_class (Granite.STYLE_CLASS_SIDEBAR);
-
-        var session = Notes.Session.get_default ();
-        session.service_added.connect ((service) => {
-            var offlinestore = (Camel.Store) service;
-            offlinestore.get_folder_info.begin ("Notes", RECURSIVE, GLib.Priority.DEFAULT, null, (obj,res) => {
-                try {
-                    var folder_info = offlinestore.get_folder_info.end (res);
-                    if (folder_info != null) {
-                        list_store.append (new Notes.FoldersPane.FolderInfo (offlinestore, folder_info));
-
-                        var child = folder_info.child;
-                        while (child != null) {
-                            list_store.append (new Notes.FoldersPane.FolderInfo (offlinestore, child));
-                            child = child.next;
-                        }
-                    }
-                } catch (Error e) {
-                    critical (e.message);
-                }
-            });
-
-            offlinestore.folder_created.connect ((folder_info) => {
-                critical ("add folder_info");
-                list_store.append (new Notes.FoldersPane.FolderInfo (offlinestore, folder_info));
-            });
-            // offlinestore.folder_deleted.connect (folder_deleted);
-            // offlinestore.folder_info_stale.connect (reload_folders);
-            // offlinestore.folder_renamed.connect (folder_renamed);
-        });
     }
 
     private void setup_func (Object object) {
@@ -71,7 +41,7 @@ public class Notes.FoldersPane : Granite.Bin {
 
     private void bind_func (Object object) {
         var list_item = (Gtk.ListItem) object;
-        ((FolderItemChild) list_item.child).folder_info = (Notes.FoldersPane.FolderInfo) list_item.item;
+        ((FolderItemChild) list_item.child).folder_info = (Notes.FolderItem) list_item.item;
     }
 
     private void header_setup_func (Object object) {
@@ -81,36 +51,27 @@ public class Notes.FoldersPane : Granite.Bin {
 
     private void header_bind_func (Object object) {
         var list_header = (Gtk.ListHeader) object;
-        ((Granite.HeaderLabel) list_header.child).label = ((Notes.FoldersPane.FolderInfo) list_header.item).store.display_name;
-    }
-
-    private class FolderInfo : Object {
-        public Camel.Store store { get; construct; }
-        public Camel.FolderInfo folder_info { get; construct; }
-
-        public FolderInfo (Camel.Store store, Camel.FolderInfo folder_info) {
-            Object (
-                store: store,
-                folder_info: folder_info
-            );
-        }
+        ((Granite.HeaderLabel) list_header.child).label = ((Notes.FolderItem) list_header.item).store.display_name;
     }
 
     private class FolderItemChild : Gtk.Box {
-        public Notes.FoldersPane.FolderInfo folder_info {
+        public Notes.FolderItem folder_info {
             set {
-                label.label = value.folder_info.display_name;
+                label.label = value.info.display_name;
             }
         }
 
         private Gtk.Label label;
+
+        class construct {
+            set_css_name ("folder-item-child");
+        }
 
         construct {
             var folder_image = new Gtk.Image.from_icon_name ("folder");
 
             label = new Gtk.Label (null);
 
-            spacing = 6;
             append (folder_image);
             append (label);
         }
