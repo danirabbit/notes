@@ -60,15 +60,9 @@ public class Notes.MainWindow : Adw.ApplicationWindow {
             nav_split_view.show_content = true;
         });
 
-        notes_page.row_activated.connect (on_note_activated);
-    }
-
-    private async void on_note_activated (Camel.MessageInfo message_info) {
-        var folder = yield notes_page.folder_item.get_folder (null);
-        var message = yield folder.get_message (message_info.uid, GLib.Priority.DEFAULT, null);
-
-        content_split_view.show_content = true;
-
-        yield editor_page.open_message (message);
+        notes_page.row_activated.connect ((folder, message_info) => {
+                content_split_view.show_content = true;
+                editor_page.open_message.begin (folder, message_info);
+        });
     }
 }

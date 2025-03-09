@@ -20,14 +20,20 @@ public class Notes.EditorPage : Adw.NavigationPage {
         add_css_class (Granite.STYLE_CLASS_VIEW);
     }
 
-    public async void open_message (Camel.MimeMessage message) {
-        title = message.get_subject ();
-        var message_content = yield handle_text_mime (message.content);
-        if (message_content == "") {
-            return;
-        }
+    public async void open_message (Camel.Folder folder, Camel.MessageInfo message_info) {
+        title = message_info.subject;
 
-        web_view.load_html (message_content, "elementary-notes:body");
+        try {
+            var message = yield folder.get_message (message_info.uid, GLib.Priority.DEFAULT, null);
+            var message_content = yield handle_text_mime (message.content);
+            if (message_content == "") {
+                return;
+            }
+
+            web_view.load_html (message_content, "elementary-notes:body");
+        } catch (Error e) {
+            critical (e.message);
+        }
     }
 
     private async string handle_text_mime (Camel.DataWrapper part) {

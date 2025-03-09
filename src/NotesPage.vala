@@ -4,7 +4,7 @@
  */
 
 public class Notes.NotesPage : Adw.NavigationPage {
-    public signal void row_activated (Camel.MessageInfo message_info);
+    public signal void row_activated (Camel.Folder folder, Camel.MessageInfo message_info);
 
     private Notes.FolderItem? _folder_item = null;
     public Notes.FolderItem folder_item {
@@ -47,7 +47,7 @@ public class Notes.NotesPage : Adw.NavigationPage {
         title = _("Notes");
 
         list_view.activate.connect ((pos) => {
-            row_activated ((Camel.MessageInfo) selection_model.get_item (pos));
+            row_activated (folder_item.folder, (Camel.MessageInfo) selection_model.get_item (pos));
         });
     }
 

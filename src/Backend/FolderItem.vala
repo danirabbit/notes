@@ -6,6 +6,7 @@
 public class Notes.FolderItem : Object {
     public Camel.Store store { get; construct; }
     public Camel.FolderInfo info { get; construct; }
+    public Camel.Folder folder { get; private set; }
 
     public GLib.ListStore message_infos { get; private set; }
 
@@ -24,7 +25,7 @@ public class Notes.FolderItem : Object {
 
     private async void init () {
         try {
-            var folder = yield store.get_folder (info.full_name, NONE, GLib.Priority.DEFAULT, null);
+            folder = yield store.get_folder (info.full_name, NONE, GLib.Priority.DEFAULT, null);
 
             yield folder.refresh_info (GLib.Priority.DEFAULT, null);
 
@@ -36,9 +37,5 @@ public class Notes.FolderItem : Object {
         } catch (Error e) {
             critical (e.message);
         }
-    }
-
-    public async Camel.Folder get_folder (Cancellable? cancellable = null) throws Error {
-        return yield store.get_folder (info.full_name, NONE, GLib.Priority.DEFAULT, cancellable);
     }
 }
