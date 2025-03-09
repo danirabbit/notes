@@ -1,3 +1,4 @@
 src/Application.vala
+src/FoldersPage.vala
 src/MainWindow.vala
-src/FoldersPane.vala
+src/NotesPage.vala
