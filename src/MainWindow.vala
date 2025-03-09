@@ -56,7 +56,6 @@ public class Notes.MainWindow : Adw.ApplicationWindow {
 
         folders_page.row_activated.connect ((folder_item) => {
             notes_page.folder_item = folder_item;
-            notes_page.title = folder_item.info.display_name;
             nav_split_view.show_content = true;
         });
 

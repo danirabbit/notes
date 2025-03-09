@@ -13,6 +13,7 @@ public class Notes.NotesPage : Adw.NavigationPage {
         }
         set {
             _folder_item = value;
+            title = value.info.display_name;
             selection_model.model = value.message_infos;
         }
     }
