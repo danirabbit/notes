@@ -1,12 +1,32 @@
-.sidebar header {
+.sidebar-pane {
+    background: @insensitive_bg_color;
+}
+
+.sidebar-pane .content-pane {
+    background: @base_color;
+}
+
+.sidebar-pane:dir(ltr) {
+    border-right: 1px solid @menu_separator;
+}
+
+.sidebar-pane:dir(rtl) {
+    border-left: 1px solid @menu_separator;
+}
+
+listview {
+    background: inherit;
+}
+
+listview header {
     margin-top: 0.25em;
     margin-bottom: 0.25em;
 }
 
-.sidebar-pane row > box {
-    border-spacing: 0.5em;
+listview row {
+    padding: 0.5em 1em;
 }
 
-.content-pane row {
-    padding: 0.5em;
+listview row > box {
+    border-spacing: 0.5em;
 }

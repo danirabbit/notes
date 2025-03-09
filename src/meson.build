@@ -1,5 +1,6 @@
 sources = [
     'Application.vala',
+    'EditorPage.vala',
     'FoldersPage.vala',
     'MainWindow.vala',
     'NotesPage.vala',

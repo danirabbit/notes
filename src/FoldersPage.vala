@@ -4,7 +4,7 @@
  */
 
 public class Notes.FoldersPage : Adw.NavigationPage {
-    public signal void folder_activated (Notes.FolderItem folder_item);
+    public signal void row_activated (Notes.FolderItem folder_item);
 
     construct {
         var selection_model = new Gtk.NoSelection (Notes.Session.get_default ().folder_items);
@@ -37,10 +37,9 @@ public class Notes.FoldersPage : Adw.NavigationPage {
 
         child = toolbarview;
         title = _("Folders");
-        add_css_class (Granite.STYLE_CLASS_SIDEBAR);
 
         list_view.activate.connect ((pos) => {
-            folder_activated ((Notes.FolderItem) selection_model.get_item (pos));
+            row_activated ((Notes.FolderItem) selection_model.get_item (pos));
         });
     }
 

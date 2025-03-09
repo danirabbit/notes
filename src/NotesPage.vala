@@ -4,6 +4,8 @@
  */
 
 public class Notes.NotesPage : Adw.NavigationPage {
+    public signal void row_activated (Camel.MessageInfo message_info);
+
     public Notes.FolderItem folder_item {
         set {
             selection_model.model = value.message_infos;
@@ -23,7 +25,9 @@ public class Notes.NotesPage : Adw.NavigationPage {
             show_title = false
         };
 
-        var list_view = new Gtk.ListView (selection_model, factory);
+        var list_view = new Gtk.ListView (selection_model, factory) {
+            single_click_activate = true
+        };
 
         var scrolled_window = new Gtk.ScrolledWindow () {
             child = list_view
@@ -36,7 +40,10 @@ public class Notes.NotesPage : Adw.NavigationPage {
 
         child = toolbarview;
         title = _("Notes");
-        add_css_class (Granite.STYLE_CLASS_VIEW);
+
+        list_view.activate.connect ((pos) => {
+            row_activated ((Camel.MessageInfo) selection_model.get_item (pos));
+        });
     }
 
     private void setup_func (Object object) {
