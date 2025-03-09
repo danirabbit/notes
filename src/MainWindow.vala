@@ -61,8 +61,8 @@ public class Notes.MainWindow : Adw.ApplicationWindow {
         });
 
         notes_page.row_activated.connect ((folder, message_info) => {
-                content_split_view.show_content = true;
-                editor_page.open_message.begin (folder, message_info);
+            content_split_view.show_content = true;
+            editor_page.open_message.begin (folder, message_info);
         });
     }
 }
