@@ -14,7 +14,7 @@ adw_dep = dependency('libadwaita-1')
 camel_dep = dependency('camel-1.2', version: '>= 3.28')
 edataserver_dep = dependency('libedataserver-1.2', version: '>= 3.28')
 edataserverui_dep = dependency('libedataserverui4-1.0', version: '>=3.45.1')
-granite_dep = dependency('granite-7')
+granite_dep = dependency('granite-7', version: '>=7.6.0')
 gtk_dep = dependency('gtk4')
 
 dependencies = [
