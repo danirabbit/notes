@@ -230,7 +230,7 @@ public class Notes.Session : Camel.Session {
     }
 
     private void add_store (Camel.Store store) {
-        store.get_folder_info.begin ("Notes", RECURSIVE, GLib.Priority.DEFAULT, null, (obj,res) => {
+        store.get_folder_info.begin ("Notes", RECURSIVE, GLib.Priority.DEFAULT, null, (obj, res) => {
             try {
                 var folder_info = store.get_folder_info.end (res);
                 if (folder_info != null) {
