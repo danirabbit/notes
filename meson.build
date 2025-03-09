@@ -16,6 +16,7 @@ edataserver_dep = dependency('libedataserver-1.2', version: '>= 3.28')
 edataserverui_dep = dependency('libedataserverui4-1.0', version: '>=3.45.1')
 granite_dep = dependency('granite-7', version: '>=7.6.0')
 gtk_dep = dependency('gtk4')
+webkit_dep = dependency('webkitgtk-6.0')
 
 dependencies = [
     adw_dep,
@@ -23,7 +24,8 @@ dependencies = [
     edataserver_dep,
     edataserverui_dep,
     granite_dep,
-    gtk_dep
+    gtk_dep,
+    webkit_dep
 ]
 
 gnome.post_install(

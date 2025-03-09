@@ -2,12 +2,12 @@
 <schemalist>
   <schema path="/io/elementary/notes/" id="io.elementary.notes">
     <key name="window-height" type="i">
-      <default>475</default>
+      <default>500</default>
       <summary>Most recent window height</summary>
       <description>Most recent window height</description>
     </key>
     <key name="window-width" type="i">
-      <default>650</default>
+      <default>900</default>
       <summary>Most recent window width</summary>
       <description>Most recent window width</description>
     </key>

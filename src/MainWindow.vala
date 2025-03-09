@@ -52,13 +52,12 @@ public class Notes.MainWindow : Adw.ApplicationWindow {
 
         folders_page.row_activated.connect ((folder_item) => {
             notes_page.folder_item = folder_item;
-            notes_page.title = folder_item.info.display_name;
             nav_split_view.show_content = true;
         });
 
-        notes_page.row_activated.connect ((message_info) => {
-            editor_page.title = message_info.subject;
+        notes_page.row_activated.connect ((folder, message_info) => {
             content_split_view.show_content = true;
+            editor_page.open_message.begin (folder, message_info);
         });
     }
 }
