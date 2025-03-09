@@ -1,3 +1,8 @@
+.sidebar header {
+    margin-top: 0.25em;
+    margin-bottom: 0.25em;
+}
+
 folder-item-child {
     border-spacing: 0.5em;
 }

@@ -3,7 +3,9 @@
  * SPDX-FileCopyrightText: 2025 elementary, Inc. (https://elementary.io)
  */
 
-public class Notes.FoldersPane : Granite.Bin {
+public class Notes.FoldersPage : Adw.NavigationPage {
+    public signal void folder_activated (Notes.FolderItem folder_item);
+
     construct {
         var selection_model = new Gtk.NoSelection (Notes.Session.get_default ().folder_items);
 
@@ -15,10 +17,13 @@ public class Notes.FoldersPane : Granite.Bin {
         header_factory.setup.connect (header_setup_func);
         header_factory.bind.connect (header_bind_func);
 
-        var headerbar = new Gtk.HeaderBar ();
+        var headerbar = new Adw.HeaderBar () {
+            show_title = false
+        };
 
         var list_view = new Gtk.ListView (selection_model, factory) {
-            header_factory = header_factory
+            header_factory = header_factory,
+            single_click_activate = true
         };
 
         var scrolled_window = new Gtk.ScrolledWindow () {
@@ -31,7 +36,12 @@ public class Notes.FoldersPane : Granite.Bin {
         toolbarview.add_top_bar (headerbar);
 
         child = toolbarview;
+        title = _("Folders");
         add_css_class (Granite.STYLE_CLASS_SIDEBAR);
+
+        list_view.activate.connect ((pos) => {
+            folder_activated ((Notes.FolderItem) selection_model.get_item (pos));
+        });
     }
 
     private void setup_func (Object object) {
@@ -41,7 +51,7 @@ public class Notes.FoldersPane : Granite.Bin {
 
     private void bind_func (Object object) {
         var list_item = (Gtk.ListItem) object;
-        ((FolderItemChild) list_item.child).folder_info = (Notes.FolderItem) list_item.item;
+        ((FolderItemChild) list_item.child).folder_item = (Notes.FolderItem) list_item.item;
     }
 
     private void header_setup_func (Object object) {
@@ -55,7 +65,7 @@ public class Notes.FoldersPane : Granite.Bin {
     }
 
     private class FolderItemChild : Gtk.Box {
-        public Notes.FolderItem folder_info {
+        public Notes.FolderItem folder_item {
             set {
                 label.label = value.info.display_name;
             }

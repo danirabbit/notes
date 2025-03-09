@@ -1,7 +1,8 @@
 sources = [
     'Application.vala',
-    'FoldersPane.vala',
+    'FoldersPage.vala',
     'MainWindow.vala',
+    'NotesPage.vala',
     'Backend' / 'FolderItem.vala',
     'Backend' / 'Session.vala'
 ]
