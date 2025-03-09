@@ -4,12 +4,12 @@
 ## Building, Testing, and Installation
 
 You'll need the following dependencies:
-* libadwaita-1
 * camel-1.2 >= 3.28
-* libedataserver-1.2 >= 3.28
-* libedataserverui4-1.0 >=3.45.1'
 * granite-7 >= 7.6.0
 * gtk4
+* libadwaita-1 >= 1.4
+* libedataserver-1.2 >= 3.28
+* libedataserverui4-1.0 >=3.45.1
 * meson
 * valac
 

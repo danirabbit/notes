@@ -10,7 +10,7 @@ i18n = import('i18n')
 
 add_global_arguments('-DGETTEXT_PACKAGE="@0@"'.format (meson.project_name()), language:'c')
 
-adw_dep = dependency('libadwaita-1')
+adw_dep = dependency('libadwaita-1', version: '>=1.4')
 camel_dep = dependency('camel-1.2', version: '>= 3.28')
 edataserver_dep = dependency('libedataserver-1.2', version: '>= 3.28')
 edataserverui_dep = dependency('libedataserverui4-1.0', version: '>=3.45.1')
