@@ -37,4 +37,8 @@ public class Notes.FolderItem : Object {
             critical (e.message);
         }
     }
+
+    public async Camel.Folder get_folder (Cancellable? cancellable = null) throws Error {
+        return yield store.get_folder (info.full_name, NONE, GLib.Priority.DEFAULT, cancellable);
+    }
 }

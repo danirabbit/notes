@@ -6,8 +6,13 @@
 public class Notes.NotesPage : Adw.NavigationPage {
     public signal void row_activated (Camel.MessageInfo message_info);
 
+    private Notes.FolderItem? _folder_item = null;
     public Notes.FolderItem folder_item {
+        get {
+            return _folder_item;
+        }
         set {
+            _folder_item = value;
             selection_model.model = value.message_infos;
         }
     }

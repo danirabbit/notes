@@ -1,4 +1,10 @@
 install_data(
+    'notes.apparmor',
+    install_dir: get_option('sysconfdir') / 'apparmor.d',
+    rename: meson.project_name()
+)
+
+install_data(
     'notes.gschema.xml',
     install_dir: get_option('datadir') / 'glib-2.0' / 'schemas',
     rename: meson.project_name() + '.gschema.xml'

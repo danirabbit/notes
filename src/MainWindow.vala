@@ -4,9 +4,13 @@
  */
 
 public class Notes.MainWindow : Adw.ApplicationWindow {
+    private Adw.NavigationSplitView content_split_view;
+    private EditorPage editor_page;
+    private NotesPage notes_page;
+
     construct {
         var folders_page = new FoldersPage ();
-        var notes_page = new NotesPage ();
+        notes_page = new NotesPage ();
 
         var nav_split_view = new Adw.NavigationSplitView () {
             content = notes_page,
@@ -16,9 +20,9 @@ public class Notes.MainWindow : Adw.ApplicationWindow {
 
         var nav_page = new Adw.NavigationPage (nav_split_view, "navigation");
 
-        var editor_page = new EditorPage ();
+        editor_page = new EditorPage ();
 
-        var content_split_view = new Adw.NavigationSplitView () {
+        content_split_view = new Adw.NavigationSplitView () {
             content = editor_page,
             sidebar = nav_page,
             show_content = true,
@@ -56,9 +60,15 @@ public class Notes.MainWindow : Adw.ApplicationWindow {
             nav_split_view.show_content = true;
         });
 
-        notes_page.row_activated.connect ((message_info) => {
-            editor_page.title = message_info.subject;
-            content_split_view.show_content = true;
-        });
+        notes_page.row_activated.connect (on_note_activated);
+    }
+
+    private async void on_note_activated (Camel.MessageInfo message_info) {
+        var folder = yield notes_page.folder_item.get_folder (null);
+        var message = yield folder.get_message (message_info.uid, GLib.Priority.DEFAULT, null);
+
+        content_split_view.show_content = true;
+
+        yield editor_page.open_message (message);
     }
 }

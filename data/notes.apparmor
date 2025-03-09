@@ -1,0 +1,9 @@
+abi <abi/4.0>,
+include <tunables/global>
+
+profile io.elementary.notes /usr/bin/io.elementary.notes flags=(unconfined) {
+  userns,
+
+  # Site-specific additions and overrides. See local/README for details.
+  include if exists <local/io.elementary.notes>
+}

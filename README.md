@@ -10,6 +10,7 @@ You'll need the following dependencies:
 * libadwaita-1 >= 1.4
 * libedataserver-1.2 >= 3.28
 * libedataserverui4-1.0 >=3.45.1
+* webkitgtk-6.0
 * meson
 * valac
 
